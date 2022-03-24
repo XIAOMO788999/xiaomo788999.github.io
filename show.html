@@ -22,7 +22,7 @@
 
         .card {
             width: 76%;
-            height: 51%;
+            display: block;
             background-color: #fff;
             position: absolute;
             left: 0;
@@ -48,7 +48,7 @@
         }
 
         .left-div div {
-            color: #6060ca;
+            /* color: #6060ca; */
             font-size: 15px;
             text-align: left;
             margin-left: 10px;
@@ -67,17 +67,29 @@
             border-left: 1px solid #e3e3e3
         }
 
+        .tip {
+            font-weight: bold;
+            font-size: 18px
+        }
+
         .right-div div {
             padding-bottom: 8px
         }
 
-        .bottom {
+        .bottom1 {
             margin: 33px 10px 0;
             padding: 35px 5px 0;
-            border-top: 1px solid #e3e3e3;
             text-align: left;
             font-weight: bold;
             font-size: 25px
+        }
+
+        .bottom2 {
+            margin: 0px 10px 0;
+            padding: 12px 5px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 18px
         }
 
         .code img {
@@ -95,11 +107,11 @@
                 <div class="left-div">
                     <div class="name">李奕晓</div>
                     <div class="school">文学院</div>
-                    <div class="id">20550301072</div>
                     <div class="clazz">20语文教育B</div>
+                    <div class="id">20550301072</div>
                 </div>
                 <div class="right-div">
-                    <div class="tip">请假起止时间：</div>
+                    <div class="tip">请假时间：</div>
                     <div class="time1">time1</div>
                     <div class="time2">time2</div>
                     <div class="code" onclick="linklove()"><img
@@ -107,20 +119,44 @@
                             alt="" /></div>
                 </div>
             </div>
-            <div class="bottom">进校</div>
+            <div class="bottom1">进校</div>
+            <div class="bottom2"></div>
         </div>
     </div>
 </body>
 <script>
+    Date.prototype.format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ?
+                    (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return fmt;
+    }
     document.getElementsByClassName("time1")[0].innerText =
-    getQueryString("startyear") + "年" + getQueryString("startmonth") + "月" + getQueryString("startday") + "日" + getQueryString("starthour") + "时-";
+        getQueryString("startyear") + "年" + getQueryString("startmonth") + "月" + getQueryString("startday") + "日" + getQueryString("starthour") + "时-";
 
     document.getElementsByClassName("time2")[0].innerText =
-    getQueryString("endyear") +"年" + getQueryString("endmonth") + "月" + getQueryString("endday") + "日" + getQueryString("endhour") + "时";
+        getQueryString("endyear") + "年" + getQueryString("endmonth") + "月" + getQueryString("endday") + "日" + getQueryString("endhour") + "时";
 
     if (getQueryString("getout") == "yes") {
-        document.getElementsByClassName("bottom")[0].innerText = "离校";
+        document.getElementsByClassName("bottom1")[0].innerText = "离校";
     }
+
+    document.getElementsByClassName("bottom2")[0].innerText = (new Date()).format("yyyy-MM-dd hh:mm:ss");
 
     function getQueryString(name) {
         let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
